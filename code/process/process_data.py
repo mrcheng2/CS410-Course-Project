@@ -30,15 +30,22 @@ class DataProcessor:
         Args:
             only_US: True to only filter data coming from US
             only_english: True to only filter data where tweets are in English
+        
+        Returns:
+            df_processed: Dataframe with 2 columns: i) timestamp ii) textdata
         """
         
         df_processed = self.df_data.copy()
+        df_processed = df_processed.rename(columns = {'tweet': 'textdata'})
         if only_US:
             df_processed = df_processed.loc[df_processed['country'] == 'United States of America']
         
         if only_english:
             pass
         
+        df_processed = df_processed[['timestamp', 'textdata']]
+        return df_processed
         
+
         
 
