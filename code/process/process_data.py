@@ -1,4 +1,4 @@
-import pandas as panda
+import pandas as pd
 import numpy as np
 
 
