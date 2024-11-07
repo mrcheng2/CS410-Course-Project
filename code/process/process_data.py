@@ -37,6 +37,7 @@ class DataProcessor:
         
         df_processed = self.df_data.copy()
         df_processed = df_processed.rename(columns = {'tweet': 'textdata'})
+        df_processed['textdata'] = df_processed['textdata'].apply(self.clean_text)
         if only_US:
             df_processed = df_processed.loc[df_processed['country'] == 'United States of America']
         
@@ -45,6 +46,13 @@ class DataProcessor:
         
         df_processed = df_processed[['timestamp', 'textdata']]
         return df_processed
+
+    @staticmethod
+    def clean_text(text):
+        text = re.sub(r"http\S+|www\S+|https\S+", '', text, flags=re.MULTILINE)  # Remove URLs
+        text = re.sub(r'\@\w+|\#','', text)  # Remove mentions and hashtags
+        text = re.sub(r"[^a-zA-Z0-9\s]", '', text)  # Remove special characters
+        return text.lower().strip()  # Convert to lowercase and strip extra spaces
         
 
         
