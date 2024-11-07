@@ -544,8 +544,11 @@ dependencies:
   - zstandard=0.19.0=py311h80987f9_0
   - zstd=1.5.5=hd90d995_0
   - pip:
+      - en-core-web-sm==3.7.1
       - executing==2.0.1
       - inline-snapshot==0.11.0
+      - langdetect==1.0.7
       - rich==13.7.1
+      - spacy-langdetect==0.1.2
       - types-toml==0.10.8.20240310
 prefix: /opt/anaconda3
