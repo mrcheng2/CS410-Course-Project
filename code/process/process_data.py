@@ -4,6 +4,9 @@ import re
 import spacy
 from spacy.language import Language
 from spacy_langdetect import LanguageDetector
+from tqdm import tqdm
+
+tqdm.pandas()
 
 class DataProcessor:
 
@@ -19,6 +22,7 @@ class DataProcessor:
 
     def __init__(self):
         self.fetch_raw_data()
+        print("Initialized DataProcessor and fetched raw data.")
 
     def fetch_raw_data(self):
         """
@@ -33,6 +37,8 @@ class DataProcessor:
         all_tweets['timestamp'] = pd.to_datetime(all_tweets['created_at'])
         
         self.df_data = all_tweets
+        print("Fetched and preprocessed raw data.")
+        
 
     def process_data(self,
                      dump_processed: bool,
@@ -53,11 +59,15 @@ class DataProcessor:
             return LanguageDetector()
         Language.factory("language_detector", func=create_lang_detector)
         nlp.add_pipe('language_detector', last=True)
-        self.df_data['is_en'] = self.df_data['tweet'].apply(lambda x: self.check_en(x, nlp))
+        print("Starting language detection...")
+        self.df_data['is_en'] = self.df_data['tweet'].progress_apply(lambda x: self.check_en(x, nlp))
+        print("Language detection completed.")
         
         df_processed = self.df_data.copy()
         df_processed = df_processed.rename(columns = {'tweet': 'textdata'})
-        df_processed['textdata'] = df_processed['textdata'].apply(self.clean_text)
+        print("Starting text cleaning...")
+        df_processed['textdata'] = df_processed['textdata'].progress_apply(self.clean_text)
+        print("Text cleaning completed.")
         
         if dump_processed:
             #Check if file dir exists
@@ -68,6 +78,7 @@ class DataProcessor:
             #dump file
             df_processed.to_csv(filename)
             print(f'File dump into: {filename}')
+        print("Data processing completed.")
         return df_processed
 
     @staticmethod
@@ -81,6 +92,7 @@ class DataProcessor:
     def check_en(txt_data, nlp_obj):
         doc = nlp_obj(txt_data) #3
         detect_language = doc._.language #4
+        #print(f"Language checked for text: {txt_data[:30]}...")  # Print only the first 30 characters
         return detect_language.get('language', None) == 'en'
 
 
