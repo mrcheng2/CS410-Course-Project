@@ -9,6 +9,9 @@ tqdm.pandas()
 nltk.download('vader_lexicon')
 
 class SentimentAnalysis:
+
+    COLS_KEEP = ['timestamp', 'country', 'candidate', 'is_en', 'sentiment_score', 'sentiment_label', 'likes', 'user_join_date', 'user_followers_count']
+    
     def __init__(self, input_file_path, output_file_path, threshold=0.05):
         self.input_file_path = input_file_path
         self.output_file_path = output_file_path
@@ -25,7 +28,7 @@ class SentimentAnalysis:
             lambda text: self.sid.polarity_scores(text)['compound']
         )
         self.df['sentiment_label'] = self.df['sentiment_score'].progress_apply(self.label_sentiment)
-
+        self.df = self.df[self.COLS_KEEP]
         self.df.to_csv(self.output_file_path, index=False)
 
     def label_sentiment(self, score):
