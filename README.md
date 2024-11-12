@@ -4,9 +4,13 @@
 
 1. **Clone the Repository**: Pull this project to your local machine using Git.
 
-2. **Download Dataset**: Retrieve the *US Election 2020 Tweets* dataset from [Kaggle](https://www.kaggle.com/datasets/manchunhui/us-election-2020-tweets/data).
+2. Install Git LFS: (https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage) to access hashtag_donaldtrump.csv and hashtag_joebiden.csv
 
-3. **Organize Files**: Place `hashtag_donaldtrump.csv` and `hashtag_joebiden.csv` in the `../../data/train/raw` directory.
+3. Activate git-lfs on your machine: git lfs install
+
+<!-- 2. **Download Dataset**: Retrieve the *US Election 2020 Tweets* dataset from [Kaggle](https://www.kaggle.com/datasets/manchunhui/us-election-2020-tweets/data).
+
+3. **Organize Files**: Place `hashtag_donaldtrump.csv` and `hashtag_joebiden.csv` in the `../../data/train/raw` directory. -->
 
 4. **Set Up Environment**:
    - **Mac Users**: In the directory where `environment.yml` is located, create the environment using:
