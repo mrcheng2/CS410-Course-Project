@@ -4,9 +4,9 @@
 
 1. **Clone the Repository**: Pull this project to your local machine using Git.
 
-2. Install Git LFS: (https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage) to access hashtag_donaldtrump.csv and hashtag_joebiden.csv
+2. **Install Git LFS**: (https://docs.github.com/en/repositories/working-with-files/managing-large-files/installing-git-large-file-storage) to access hashtag_donaldtrump.csv and hashtag_joebiden.csv
 
-3. Activate git-lfs on your machine: git lfs install
+3. **Activate git-lfs on your machine**: git lfs install
 
 <!-- 2. **Download Dataset**: Retrieve the *US Election 2020 Tweets* dataset from [Kaggle](https://www.kaggle.com/datasets/manchunhui/us-election-2020-tweets/data).
 
@@ -25,3 +25,5 @@
    - *Note*: This step may take approximately 5 hours.
 
 7. **Sentiment Analysis**: Run `sentiment_analysis.py` to perform sentiment analysis using VADER, which will add two new columns, `sentiment_score` and `sentiment_label`, to the dataset. After completion, a file named `VADER_processed_data.csv` should appear in the `CS410-Course-Project\data\train\processed` folder.
+
+*Note* First cd into process/code before running any scripts
