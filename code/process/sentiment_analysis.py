@@ -11,7 +11,8 @@ nltk.download('vader_lexicon')
 class SentimentAnalysis:
 
     COLS_KEEP = ['timestamp', 'country', 'candidate', 'is_en', 'sentiment_score', 'sentiment_label', 'likes', 'user_join_date', 'user_followers_count']
-    
+    SENTIMENT_MODELNAME = 'VADER'
+
     def __init__(self, input_file_path, output_file_path, threshold=0.05):
         self.input_file_path = input_file_path
         self.output_file_path = output_file_path
@@ -39,27 +40,34 @@ class SentimentAnalysis:
             return "Negative"
         else:
             return "Neutral"
+    
+    def __repr__(self):
+        return f'SentimentModel:{self.SENTIMENT_MODELNAME}'
 
 
-input_file = '../../data/train/processed/processed_data.csv'
-output_file = '../../data/train/processed/VADER_processed_data.csv'
-analyzer = SentimentAnalysis(input_file, output_file)
-analyzer.process_tweets()
+if __name__ == "__main__":
+    input_file = '../../data/train/processed/processed_data.csv'
+    output_file = '../../data/train/processed/VADER_processed_data.csv'
+    analyzer = SentimentAnalysis(input_file, output_file)
+    analyzer.process_tweets()
 
-df = pd.read_csv(output_file)
+    df = pd.read_csv(output_file)
 
-biden_tweets = df[df['candidate'] == 'other']
-trump_tweets = df[df['candidate'] == 'trump']
+    biden_tweets = df[df['candidate'] == 'other']
+    trump_tweets = df[df['candidate'] == 'trump']
 
-biden_sentiment_avg = biden_tweets['sentiment_score'].mean()
-biden_sentiment_counts = biden_tweets['sentiment_label'].value_counts()
+    biden_sentiment_avg = biden_tweets['sentiment_score'].mean()
+    biden_sentiment_counts = biden_tweets['sentiment_label'].value_counts()
 
-print("Biden - Average Sentiment Score:", biden_sentiment_avg)
-print("Biden - Sentiment Counts:\n", biden_sentiment_counts)
-print("===================")
+    print("Biden - Average Sentiment Score:", biden_sentiment_avg)
+    print("Biden - Sentiment Counts:\n", biden_sentiment_counts)
+    print("===================")
 
-trump_sentiment_avg = trump_tweets['sentiment_score'].mean()
-trump_sentiment_counts = trump_tweets['sentiment_label'].value_counts()
+    trump_sentiment_avg = trump_tweets['sentiment_score'].mean()
+    trump_sentiment_counts = trump_tweets['sentiment_label'].value_counts()
 
-print("Trump - Average Sentiment Score:", trump_sentiment_avg)
-print("Trump - Sentiment Counts:\n", trump_sentiment_counts)
+    print("Trump - Average Sentiment Score:", trump_sentiment_avg)
+    print("Trump - Sentiment Counts:\n", trump_sentiment_counts)
+
+
+

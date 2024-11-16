@@ -28,6 +28,13 @@ class ProbabilityModeler:
         self.layer2_datahandler = layer2_datahandler(sentiment_model = self.sentiment_model)
         self.verbose = verbose
 
+    def __repr__(self):
+        return f'ProbabilityModeler:{self.MODELNAME}'
+
+    @property
+    def params_outputfile(self):
+        return f'../params/{self.sentiment_model}_{self.layer2_datahandler.DATANAME}_{self.MODELNAME}_params.csv'
+
     def run_model(self, y_var: str = 'p_trump_win'):
         y_var = 'p_trump_win'
         df_data = self.layer2_datahandler.df_all_data
@@ -35,7 +42,14 @@ class ProbabilityModeler:
         model = sm.OLS(df_data[y_var], df_data[x_vars]).fit()
         if self.verbose:
             print(f'Modelname: {self.MODELNAME},Sentiment Model: {self.sentiment_model},  rsquared: {model.rsquared:.2f}')
+        self.save_model(model)
         return model
+
+    def save_model(self, model):
+        params_df = pd.DataFrame(model.params).T
+        params_df.index = ['betas']
+        params_df.to_csv(self.params_outputfile)
+        print(f'File saved in: {self.params_outputfile}')
 
 
 if __name__ == "__main__":

@@ -38,6 +38,9 @@ class SecondLayerDataHandler:
         df_all_data = pd.merge(df_predict_data, self.df_label_data[['p_trump_win']], left_index = True, right_index = True)
         return df_all_data
 
+    def __repr__(self):
+        return f'SecondLayerDataHandler:{self.DATANAME}'
+
 class OneRatioSecondLayerDataHandler(SecondLayerDataHandler):
     DATANAME = '1RATIO'
 
